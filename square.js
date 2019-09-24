@@ -1,24 +1,27 @@
 class Square
 {
-  constructor(start_x, end_x, start_y,end_y, size, col)
+  constructor(start_x, end_x, start_y,end_y, size, vel, col)
   {
+    //start position
     this.pos = createVector((end_x+start_x)/2, (end_y+start_y)/2);
-    this.start = createVector(start_x,start_y);
-    this.end = createVector(end_x,end_y);
-    this.vel = createVector(4,4);
+    this.start = createVector(start_x,start_y);//the highest and most left point in the world
+    this.end = createVector(end_x,end_y);//the lowest and most right point in the world
+    this.vel = createVector(vel,vel);
     this.direction = createVector(1,1);
-    this.size = size;
+    this.size = size; //size of square
     this.col = col;
   }
   
   update()
   {
+    //moving square
     this.pos.x += this.vel.x * this.direction.x;
     this.pos.y += this.vel.y * this.direction.y;    
   }
   
   bounce_in_world_space()
   {
+    //changing direction when hit walls
     if(this.pos.x<this.start.x&&this.direction.x<0)
     {
       this.direction.x *= -1;
@@ -33,7 +36,7 @@ class Square
     }
     else if(this.pos.y>this.end.y-this.size&&this.direction.y>0)
     {
-      return true;
+      return true;//when sqaure hit bottom game is over
     }
     return false;
   }
@@ -45,7 +48,7 @@ class Square
 
     if(this.pos.x > platform_pos.x - this.size &&this.pos.x < platform_pos.x + platform_size.x 
     && this.pos.y < platform_pos.y  && this.pos.y > platform_pos.y - this.size 
-    && this.direction.y > 0)
+    && this.direction.y > 0)//if go on platform
     {
       this.direction.y *= -1;
     }
